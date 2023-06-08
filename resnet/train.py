@@ -70,7 +70,7 @@ def main():
     net = resnet34()
     # load pretrain weights
     # download url: https://download.pytorch.org/models/resnet34-333f7ec4.pth
-    model_weight_path = "./resnet34-pre.pth"
+    model_weight_path = "../../flower_photos/resnet/resnet34-pre.pth"
     assert os.path.exists(model_weight_path), "file {} does not exist.".format(model_weight_path)
     net.load_state_dict(torch.load(model_weight_path, map_location='cpu'))
     for param in net.parameters():
@@ -88,7 +88,7 @@ def main():
     params = [p for p in net.parameters() if p.requires_grad]
     optimizer = optim.Adam(params, lr=0.0001)
 
-    epochs = 1
+    epochs = 5
     best_acc = 0.0
     save_path = './resNet34.pth'
     train_steps = len(train_loader)
