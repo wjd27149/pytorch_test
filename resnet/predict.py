@@ -48,11 +48,12 @@ def main():
         #predict class  由于未指定设备，PyTorch 会默认使用 CPU 进行计算
         output = torch.squeeze(model(img.to(device))).cpu()
         predict = torch.softmax(output, dim = 0)
-        predict_cla = torch.argmax(predict).numpy()
-    
+        predict_cla = torch.argmax(predict).numpy()# 返回的是全连接层得到的最大参数所对应的序号
+    print(output)
+    print(model(img.to(device)))
     print(predict)
     print(predict_cla)
-    # class_dict 字典，通过键 查找 值
+    # class_dict 字典，通过键 查找 值  并且json读出来的是 str格式，需要强制转换
     print_res = "class: {}  prob: {: .3}".format(class_dict[str(predict_cla)],predict[predict_cla].numpy())
     print(print_res)
     for i in range(len(predict)):
