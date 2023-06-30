@@ -17,10 +17,11 @@ from model import Resnet50
 import numpy as np
 
 def main():
+    config_root = "/content/pytorch_test/demo_classify_tju/config.json"
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print("using {} device.".format(device))
 
-    file = json.loads(open('config.json', 'r', encoding='utf-8').read())
+    file = json.loads(open(config_root, 'r', encoding='utf-8').read())
 
     data_root_config = file["Data_Root"] 
     image_path = data_root_config["orignial_root"]  

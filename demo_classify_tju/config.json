@@ -1,6 +1,6 @@
 {
     "Data_Root": {
-        "orignial_root": "/home/liuyihan/pytorch_practise/images"
+        "orignial_root": "/content/images/flower_photos"
     },
 
     "Resnet50": {
