@@ -215,6 +215,6 @@ def Resnext101_32x8d(num_classes=1000, include_top=True):
 
 if __name__ == '__main__':
     model = Resnet50(num_classes= 5)
-    x = torch.randn(2, 3, 224, 224)
+    x = torch.randn(2, 3, 224, 224).cpu()
     print(model(x).shape)
     torchsummary.summary(model.cpu(), (3, 224, 224))

@@ -84,13 +84,13 @@ def main():
             param.requires_grad = False
         class_size = 5
         in_channels = net.fc.in_features
-        model.fc = nn.Linear(in_channels, class_size)
-        model = model.to(device)
+        net.fc = nn.Linear(in_channels, class_size)
+        net = net.to(device)  
     elif model_name == "Resnet50":
-        net = Resnet50(num_classes= 5)
+        net = Resnet50(num_classes= 5).to(device)
+
     # load pretrain weights
     # download url: https://download.pytorch.org/models/resnet34-333f7ec4.pth
-
 
     # change fc layer structure
     #首先，通过 net.fc.in_features 获取了原始模型中最后一层全连接层的输入通道数（即输入特征维度)
