@@ -26,7 +26,7 @@ def main():
     data_root_config = file["Data_Root"] 
     image_path = data_root_config["orignial_root"]  
 
-    using_config = file["Resnet50"]
+    using_config = file["official_resnet50"]# change it model--name
     model_name = using_config["model_name"]
     batch_size_train = using_config["dataset"]["batch_size_train"]
     batch_size_test = using_config["dataset"]["batch_size_test"]
@@ -133,7 +133,7 @@ def main():
                                                                      loss)
         total_loss = running_loss / train_steps
         writer.add_scalar('loss', total_loss, epoch)
-        
+
         # 将指标数据保存为numpy数组
         total_loss_ = np.array(total_loss)
         total_loss_ = np.round(total_loss_, 3)  # 限制小数点后三位

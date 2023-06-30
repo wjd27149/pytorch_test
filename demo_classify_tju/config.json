@@ -12,7 +12,7 @@
             "batch_size_train": 16, "batch_size_test": 16
         },
         "config": {
-            "random_seed": 0, "epoch": 20, "acc_threshold": 0.98
+            "random_seed": 0, "epoch": 100, "acc_threshold": 0.98
         },
         "Continue_to_train": "False"      
     },
