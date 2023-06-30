@@ -133,14 +133,17 @@ def main():
                                                                      loss)
         total_loss = running_loss / train_steps
         writer.add_scalar('loss', total_loss, epoch)
-
+        
         # 将指标数据保存为numpy数组
         total_loss_ = np.array(total_loss)
+        total_loss_ = np.round(total_loss_, 3)  # 限制小数点后三位
         epoch_ = np.array(epoch)
+        epoch_ = epoch_.astype(int)  # 转换为整数类型
 
-        # 将numpy数组保存为txt文件
-        np.savetxt(model_name + '_train.txt', np.column_stack((total_loss_, epoch_)), delimiter='\t', header='total_loss\tepoch', comments='')
-
+        # 将numpy数组保存为txt文件（追加写入）
+        with open(model_name + '_train.txt', 'a') as f:
+            np.savetxt(f, np.column_stack((total_loss_, epoch_)), delimiter='\t', header='total_loss\tepoch', comments='')
+            
         net.eval()
         acc = 0
         predict_list = []
@@ -164,7 +167,7 @@ def main():
 
         print('[epoch %d] train_loss: %.3f  val_accuracy: %.3f' %
               (epoch + 1, total_loss, acc))
-        table = classification_report(torch.cat(predict_list), val_images_label, target_names=np.arange(0, 525).astype(str))
+        table = classification_report(torch.cat(predict_list), val_images_label, target_names=np.arange(0, 5).astype(str))
         f = open(model_name + '_validation.txt',"w+")
         print(table, file = f)
 
