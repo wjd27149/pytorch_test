@@ -86,7 +86,7 @@ def main():
         model.fc = nn.Linear(in_channels, class_size)
         model = model.to(device)
     elif model_name == "Resnet50":
-        net = resnet50(num_classes= 5)
+        net = Resnet50(num_classes= 5)
     # load pretrain weights
     # download url: https://download.pytorch.org/models/resnet34-333f7ec4.pth
 
