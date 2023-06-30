@@ -10,11 +10,11 @@ from dataset import MyDataSet
 from torchvision.models import resnet50, ResNet50_Weights
 
 from utils import split_data
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report
 
 from torch.utils.tensorboard import SummaryWriter
 from model import Resnet50
-
+import numpy as np
 
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -106,7 +106,7 @@ def main():
 
     best_acc = 0.0
     save_path = './resNet50.pth'
-    save_pre_path = './resNet50_pre.pth'
+    # save_pre_path = './resNet50_pre.pth'
     train_steps = len(train_loader)
     for epoch in range(n_epochs):
         # train
@@ -132,6 +132,14 @@ def main():
                                                                      loss)
         total_loss = running_loss / train_steps
         writer.add_scalar('loss', total_loss, epoch)
+
+        # 将指标数据保存为numpy数组
+        total_loss_ = np.array(total_loss)
+        epoch_ = np.array(epoch)
+
+        # 将numpy数组保存为txt文件
+        np.savetxt(model_name + '_train.txt', np.column_stack((total_loss_, epoch_)), delimiter='\t', header='total_loss\tepoch', comments='')
+
         net.eval()
         acc = 0
         predict_list = []
@@ -155,8 +163,11 @@ def main():
 
         print('[epoch %d] train_loss: %.3f  val_accuracy: %.3f' %
               (epoch + 1, total_loss, acc))
+        table = classification_report(torch.cat(predict_list), val_images_label, target_names=np.arange(0, 525).astype(str))
+        f = open(model_name + '_validation.txt',"w+")
+        print(table, file = f)
 
-        torch.save(net.state_dict(), save_pre_path)
+        # torch.save(net.state_dict(), save_pre_path)
         if acc > best_acc:
             best_acc = acc
             torch.save(net.state_dict(), save_path)
