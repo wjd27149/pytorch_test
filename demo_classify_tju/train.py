@@ -33,7 +33,7 @@ def main():
     learning_rate = using_config["optimizer"]["lr"]
     momentum = using_config["optimizer"]["momentum"]
     n_epochs = using_config["config"]["epoch"]
-    continue_train = using_config["Continue_to_train"]
+    # continue_train = using_config["Continue_to_train"]
     writer = SummaryWriter(f'./log/' + model_name)
 
     # uploader dataset
